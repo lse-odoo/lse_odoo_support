@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import api, models, fields
 from odoo.tools import dumpstacks
 
 import logging
@@ -8,22 +8,27 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class TechSupportOverrideModuleClass(models.Model):
-    _name = 'mail.channel'
-    _inherit = ['mail.channel']
+    _name = 'sale.order'
+    _inherit = ['sale.order']
 
     def track(self, vals):
-        value_to_write = vals.get("channel_last_seen_partner_ids", False)
-        if value_to_write:
-            _logger.warning("LSE tracker triggered",
-                            "Self", str(self),
-                            "Current value:", self.channel_last_seen_partner_ids,
-                            "Updated value:", value_to_write)
-            dumpstacks()
+        _logger.warning("LSE tracker triggered \nself %s \nvalues %s",
+                        self, vals,
+                        stack_info=True)
+        # dumpstacks()
 
-    def _write(self, vals):
-        self.track(vals)
-        return super(TechSupportOverrideModuleClass, self)._write(vals)
+    @api.model
+    def _create(self, data_list):
+        _logger.warning("Call to _create")
+        self.track(data_list)
+        created = super(TechSupportOverrideModuleClass, self)._create(data_list)
+        _logger.warning(created.read(["id", "name"]))
+        return created
 
-    def write(self, vals):
-        self.track(vals)
-        return super(TechSupportOverrideModuleClass, self).write(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        _logger.warning("Call to create")
+        self.track(vals_list)
+        created = super(TechSupportOverrideModuleClass, self).create(vals_list)
+        _logger.warning(created.read(["id", "name"]))
+        return created

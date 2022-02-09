@@ -8,8 +8,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class TechSupportOverrideModuleClass(models.Model):
-    _name = 'sale.order'
-    _inherit = ['sale.order']
+    _name = 'account.bank.statement.line'
+    _inherit = ['account.bank.statement.line']
 
     def track(self, vals):
         _logger.warning("LSE tracker triggered \nself %s \nvalues %s",
@@ -22,7 +22,7 @@ class TechSupportOverrideModuleClass(models.Model):
         _logger.warning("Call to _create")
         self.track(data_list)
         created = super(TechSupportOverrideModuleClass, self)._create(data_list)
-        _logger.warning(created.read(["id", "name"]))
+        _logger.warning(created.read(["id", "name", "partner_name", "payment_ref", "amount"]))
         return created
 
     @api.model_create_multi
@@ -30,5 +30,5 @@ class TechSupportOverrideModuleClass(models.Model):
         _logger.warning("Call to create")
         self.track(vals_list)
         created = super(TechSupportOverrideModuleClass, self).create(vals_list)
-        _logger.warning(created.read(["id", "name"]))
+        _logger.warning(created.read(["id", "name", "partner_name", "payment_ref", "amount"]))
         return created

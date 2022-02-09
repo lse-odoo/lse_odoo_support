@@ -12,7 +12,7 @@ class TechSupportOverrideModuleClass(models.Model):
     _inherit = ['account.bank.statement.line']
 
     def track(self, vals):
-        _logger.warning("LSE tracker triggered \nself %s \nvalues %s",
+        _logger.info("LSE tracker triggered \nself %s \nvalues %s",
                         self, vals,
                         stack_info=True)
         # dumpstacks()

@@ -25,7 +25,7 @@ class TechSupportOverrideModuleClass(models.Model):
         _logger.info(f"{r} before: {self.read(['id', 'is_media_disconnected'])}")
         self.track(data_list)
         created = super(TechSupportOverrideModuleClass, self)._write(data_list)
-        _logger.info(f"{r} after: {created.read(['id', 'is_media_disconnected'])}")
+        _logger.info(f"{r} after: {self.read(['id', 'is_media_disconnected'])}")
         return created
 
     # @api.model_create_multi

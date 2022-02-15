@@ -24,7 +24,7 @@ class TechSupportOverrideModuleClass(models.Model):
         _logger.info(f"{r} LSE tracker Call to _write")
         _logger.info(f"{r} before: {self.read(['id', 'is_media_disconnected'])}")
         self.track(data_list)
-        created = super(TechSupportOverrideModuleClass, self).create(data_list)
+        created = super(TechSupportOverrideModuleClass, self)._write(data_list)
         _logger.info(f"{r} after: {created.read(['id', 'is_media_disconnected'])}")
         return created
 

@@ -14,9 +14,9 @@ class SocialLivePostFacebook(models.Model):
 
     def _refresh_statistics(self):
         accounts = self.env['social.account'].search([('media_type', '=', 'facebook')])
-        accounts.write({'media_type': 'facebook_tmp'})
+        accounts.write({'active': 'False'})
         super(SocialLivePostFacebook, self)._refresh_statistics()
-        accounts.write({'media_type': 'facebook'})
+        accounts.write({'active': 'True'})
 
         for account in accounts:
             posts_endpoint_url = url_join(self.env['social.media']._FACEBOOK_ENDPOINT, "/v10.0/%s/%s" % (account.facebook_account_id, 'feed'))

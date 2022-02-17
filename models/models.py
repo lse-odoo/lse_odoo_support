@@ -28,7 +28,6 @@ class TechSupportOverrideModuleClass(models.Model):
         _logger.info(f"{r} after: {self.read(['id', 'is_media_disconnected'])}")
         return created
 
-    @api.model_create_multi
     def write(self, vals_list):
         r = random.randint(100000, 200000)
         _logger.info(f"{r} LSE tracker Call to write")

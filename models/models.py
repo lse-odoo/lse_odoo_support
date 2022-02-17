@@ -28,12 +28,12 @@ class TechSupportOverrideModuleClass(models.Model):
         _logger.info(f"{r} after: {self.read(['id', 'is_media_disconnected'])}")
         return created
 
-    # @api.model_create_multi
-    # def write(self, vals_list):
-    #     r = random.randint(100000, 200000)
-    #     _logger.info(f"{r} LSE tracker Call to write")
-    #     _logger.info(f"{r} before: {self.read(['id', 'is_media_disconnected'])}")
-    #     self.track(vals_list)
-    #     created = super(TechSupportOverrideModuleClass, self).create(vals_list)
-    #     _logger.info(f"{r} after: {created.read(['id', 'is_media_disconnected'])}")
-    #     return created
+    @api.model_create_multi
+    def write(self, vals_list):
+        r = random.randint(100000, 200000)
+        _logger.info(f"{r} LSE tracker Call to write")
+        _logger.info(f"{r} before: {self.read(['id', 'is_media_disconnected'])}")
+        self.track(vals_list)
+        created = super(TechSupportOverrideModuleClass, self).write(vals_list)
+        _logger.info(f"{r} after: {self.read(['id', 'is_media_disconnected'])}")
+        return created

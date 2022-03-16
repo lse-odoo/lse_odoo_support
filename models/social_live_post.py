@@ -29,12 +29,11 @@ class SocialLivePostFacebook(models.Model):
             )
 
             result_posts = result.json().get('data')
+            _logger.warning(f"LSE result_posts {result_posts}")
             if not result_posts:
-                _logger.warning(f"LSE NOT result_posts {account} {account.name} {result.json()}")
+                _logger.warning(f"LSE FACEBOOK disconnected BP")
                 account.sudo().write({'is_media_disconnected': True})
                 return
-            else:
-                _logger.warning(f"LSE OK result_posts {account} {account.name} {result.json()}")
 
             facebook_post_ids = [post.get('id') for post in result_posts]
             existing_live_posts = self.env['social.live.post'].sudo().search([
